@@ -22,8 +22,6 @@ WebDriverWait(driver, delay).until(EC.element_to_be_clickable((By.CSS_SELECTOR ,
 first_procedure_number = 45752                                                                                          #Это номера процедур, находящиеся в списке "Выберите направление" 
 last_procedure_number = 45806
 for i in range (first_procedure_number,last_procedure_number+1,1):                                                      #Запускаем цикл по открытию всех направлений 
-
-
     try:                                                                                                                        #Пробуем нажать на выбор направления
         WebDriverWait(driver, delay).until(EC.element_to_be_clickable((By.CSS_SELECTOR , "[data-id='direction']"))).click()
     except ElementClickInterceptedException:                                                                                    #Если не получается, листаем страницу вверх и снова нажимаем, единственное здесь замечание, используя цикл for для считывания таблиц
