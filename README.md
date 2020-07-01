@@ -1,1 +1,1 @@
-# this program is created for parse information from tables in HTML. Language which use for this is python
+# This program is created for parse information from tables in HTML. I use here Python language and Selenium
