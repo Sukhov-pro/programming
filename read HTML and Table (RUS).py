@@ -34,18 +34,18 @@ for i in range (first_procedure_number,last_procedure_number+1,1):              
     name_procedure = WebDriverWait(driver, delay).until(EC.element_to_be_clickable((By.CSS_SELECTOR , number_procedure))).text       #Выявление названия направления в случае его доступности, недоступен = ожидание
     WebDriverWait(driver, delay).until(EC.element_to_be_clickable((By.CSS_SELECTOR , number_procedure))).click()                     #Ожидай пока не появится возможность кликнуть на нужное направление, потом нажимай
     
-    WebDriverWait(driver, delay).until(EC.visibility_of_element_located((By.XPATH , '/html/body/div[3]/section/div/div[1]/div/div[4]/div[1]/div/table')))   #ожидаем загрузку таблицы услуг с направления
+    WebDriverWait(driver, delay).until(EC.visibility_of_element_located((By.XPATH , '/html/body/div[3]/section/div/div[1]/div/div[4]/div[1]/div/table')))   #Ожидаем загрузку таблицы услуг с направления
 
     try:
-        tbl = driver.find_element_by_xpath("/html/body/div[3]/section/div/div[1]/div/div[4]/div[1]/div/table").get_attribute('outerHTML') #скачиваем данные с таблицы услуг по направлению
+        tbl = driver.find_element_by_xpath("/html/body/div[3]/section/div/div[1]/div/div[4]/div[1]/div/table").get_attribute('outerHTML') #Скачиваем данные с таблицы услуг по направлению
     except StaleElementReferenceException:
-        time.sleep(5)                                                                                                                     # иначе, ждем полной загрузки и снова скачиваем данные с таблицы услуг по направлению
+        time.sleep(5)                                                                                                                     #Иначе, ждем полной загрузки и снова скачиваем данные с таблицы услуг по направлению
         tbl = driver.find_element_by_xpath("/html/body/div[3]/section/div/div[1]/div/div[4]/div[1]/div/table").get_attribute('outerHTML')
 
     df  = pd.read_html(tbl)                                                     #Работа с таблицей, выборка нужных данных, во
-    df  = df[0].loc[:,0:1]                                                         #выборка нужных столбцов
+    df  = df[0].loc[:,0:1]                                                         #Выборка нужных столбцов
     df  = df.rename(columns={0: "Наименование услуги", 1: "Цена"})                      #Работа с таблицей, создаем название колонок
-    df["Цена"] = df["Цена"].astype(str).str[:-2].astype(np.int64)                           #переводим в Int второй столбец цен
+    df["Цена"] = df["Цена"].astype(str).str[:-2].astype(np.int64)                           #Переводим в Int второй столбец цен
 
     print('{0} : {1:.2f} руб.'.format(name_procedure, df["Цена"].mean()))                   #Сообщение пользователю о работе программы и данном этапе
     filed.write('{0} : {1:.2f} руб.'.format(name_procedure, df["Цена"].mean()))    #Запись этапа в файл
